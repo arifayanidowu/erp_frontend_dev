@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
-import { makeStyles, InputAdornment } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
+import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
@@ -12,12 +13,13 @@ import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundImage: "url(/login.png)",
+    backgroundImage: "url(/img/login.png)",
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     width: "100%",
-    height: "100vh",
+    minHeight: "100vh",
+    height: "100%",
     color: "#fefefe",
     overflow: "hidden",
     paddingLeft: 24,
@@ -56,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     fontSize: 13,
+    fontWeight: 400,
   },
 }));
 
@@ -72,9 +75,10 @@ export const LoginComponent = () => {
   };
 
   const handleChange = (e) => {
+    e.persist();
     setState((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value,
+      [e.target.id]: e.target.value,
     }));
   };
 
@@ -85,17 +89,16 @@ export const LoginComponent = () => {
 
   return (
     <div className={classes.root}>
-      {/* <Container maxWidth="lg" className={classes.container}> */}
-      {/* <Typography component="h4" variant="h6">
-          LOGO
-        </Typography> */}
       <div style={{ paddingTop: 30, paddingLeft: 30 }}>
         <Link to="/">
-          <img src="/Logo2.png" alt="Logo" width="100" />
+          <img src="/img/Logo2.png" alt="Logo" width="100" />
         </Link>
       </div>
       <Card className={classes.card}>
-        <form className={(classes.centered, classes.form)}>
+        <form
+          className={(classes.centered, classes.form)}
+          onSubmit={handleSubmit}
+        >
           <Typography align="center" gutterBottom className={classes.loginText}>
             LOGIN
           </Typography>
@@ -107,16 +110,18 @@ export const LoginComponent = () => {
             fullWidth
             className={classes.textField}
             required
-            name="email"
+            id="email"
             value={state.email}
+            onChange={handleChange}
           />
           <TextField
             label="Password"
             variant="outlined"
             type={isPassword ? "text" : "password"}
             color="primary"
-            name="password"
+            id="password"
             value={state.password}
+            onChange={handleChange}
             fullWidth
             className={classes.textField}
             InputProps={{
@@ -125,6 +130,7 @@ export const LoginComponent = () => {
                   <IconButton
                     aria-label="toggle password visibility"
                     onClick={showVisibility}
+                    edge="end"
                   >
                     {isPassword ? <Visibility /> : <VisibilityOff />}
                   </IconButton>
@@ -151,7 +157,7 @@ export const LoginComponent = () => {
             </Link>
           </Grid>
           <Grid item md={6} xs={12}>
-            <Link to="/" className={classes.link}>
+            <Link to="/vendor/register" className={classes.link}>
               Are you a new vendor? Click to create account
             </Link>
           </Grid>

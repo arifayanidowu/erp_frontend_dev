@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundImage: "url(/login.png)",
+    backgroundImage: "url(/img/login.png)",
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
@@ -63,7 +63,7 @@ export const ForgotPassword = () => {
     <div className={classes.root}>
       <div style={{ paddingTop: 30, paddingLeft: 30 }}>
         <Link to="/">
-          <img src="/Logo2.png" alt="Logo" width="100" />
+          <img src="/img/Logo2.png" alt="Logo" width="100" />
         </Link>
       </div>
       <Card className={classes.card}>
