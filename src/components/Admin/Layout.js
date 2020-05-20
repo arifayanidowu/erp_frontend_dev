@@ -18,7 +18,7 @@ import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { mainListItems, secondaryListItems } from "./ListItems";
+import { MainListItems, SecondaryListItems } from "./ListItems";
 
 const drawerWidth = 240;
 
@@ -63,6 +63,8 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     position: "relative",
     whiteSpace: "nowrap",
+    background: "#182653",
+    color: "#fefefe",
     width: drawerWidth,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
@@ -99,6 +101,12 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
+  icon: {
+    fill: "#fefefe",
+  },
+  footer: {
+    marginTop: "auto",
+  },
 }));
 
 export const Layout = ({ children }) => {
@@ -117,11 +125,11 @@ export const Layout = ({ children }) => {
       <AppBar
         position="absolute"
         className={clsx(classes.appBar, open && classes.appBarShift)}
+        style={{ background: "#fefefe" }}
       >
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
-            color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             className={clsx(
@@ -134,14 +142,14 @@ export const Layout = ({ children }) => {
 
           <div className={classes.title}>
             <img
-              src="/img/Logo2.png"
+              src="/img/rslogo.png"
               alt="Logo"
               width="100"
               // className={classes.title}
             />
           </div>
 
-          <IconButton color="inherit">
+          <IconButton>
             <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
             </Badge>
@@ -157,19 +165,37 @@ export const Layout = ({ children }) => {
       >
         <div className={classes.toolbarIcon}>
           <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
+            <ChevronLeftIcon className={classes.icon} />
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List>
+          <MainListItems />
+        </List>
         <Divider />
-        <List>{secondaryListItems}</List>
+        <List>
+          <SecondaryListItems />
+        </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           {children}
-          <Box pt={4}>{/* <Copyright /> */}</Box>
+          {/* <Box pt={4} className={classes.footer}>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              align="center"
+              style={{ fontWeight: "bold" }}
+            >
+              Copyright &copy;
+              <Link color="inherit" href="https://russelsmithgroup.com/">
+                RusselSmith
+              </Link>{" "}
+              {new Date().getFullYear()}
+              {"."}
+            </Typography>
+          </Box> */}
         </Container>
       </main>
     </div>
