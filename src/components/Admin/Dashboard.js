@@ -20,6 +20,10 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: 0,
+      marginTop: 15,
+    },
   },
   paper: {
     marginTop: 30,
@@ -31,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
   amount: {
     color: "#6F6767",
     fontWeight: 300,
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 16,
+    },
   },
 }));
 
@@ -39,11 +46,11 @@ export const Dashboard = () => {
   const [date, setDate] = React.useState(null);
 
   React.useEffect(() => {
-    const day = new Date().getDay();
+    const day = new Date().getDate();
     const month = new Date().getMonth();
     const year = new Date().getFullYear();
 
-    const currentDate = `${day} / ${month} / ${year}`;
+    const currentDate = `${day} / ${month + 1} / ${year}`;
     setDate(currentDate);
   }, []);
 

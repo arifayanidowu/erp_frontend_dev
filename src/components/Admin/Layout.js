@@ -7,24 +7,27 @@ import Box from "@material-ui/core/Box";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
+
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Link from "@material-ui/core/Link";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { MainListItems, SecondaryListItems } from "./ListItems";
+import { Typography, Avatar } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    // flexDirection: "column",
+    // minHeight: "100vh",
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
@@ -84,13 +87,17 @@ const useStyles = makeStyles((theme) => ({
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
-    flexGrow: 1,
+    width: "100%",
+    display: "flex",
+    // flexGrow: 1,
     height: "100vh",
+    flexDirection: "column",
     overflow: "auto",
   },
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
+    flexGrow: 1,
   },
   paper: {
     padding: theme.spacing(2),
@@ -105,20 +112,64 @@ const useStyles = makeStyles((theme) => ({
     fill: "#fefefe",
   },
   footer: {
+    padding: theme.spacing(3, 2),
     marginTop: "auto",
+    // backgroundColor:
+    //   theme.palette.type === "light"
+    //     ? theme.palette.grey[200]
+    //     : theme.palette.grey[800],
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 8,
+    },
+  },
+  footerText: {
+    fontSize: 14,
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 10,
+    },
   },
 }));
 
 export const Layout = ({ children }) => {
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(true);
+
+  const isMenuOpen = Boolean(anchorEl);
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+  // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+  const menuId = "primary-search-account-menu";
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>2FA</MenuItem>
+    </Menu>
+  );
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -141,18 +192,29 @@ export const Layout = ({ children }) => {
           </IconButton>
 
           <div className={classes.title}>
-            <img
-              src="/img/rslogo.png"
-              alt="Logo"
-              width="100"
-              // className={classes.title}
-            />
+            <Link to="#">
+              <img
+                src="/img/rslogo.png"
+                alt="Logo"
+                width="70"
+                // className={classes.title}
+              />
+            </Link>
           </div>
 
-          <IconButton>
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
+          <Box>
+            <span style={{ color: "#bdbdbd", fontFamily: "Rubik" }}>
+              Jon Jones
+            </span>
+            <IconButton>
+              <Badge badgeContent={4} color="secondary">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+          </Box>
+
+          <IconButton edge="end" onClick={handleProfileMenuOpen}>
+            <Avatar></Avatar>
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -168,6 +230,7 @@ export const Layout = ({ children }) => {
             <ChevronLeftIcon className={classes.icon} />
           </IconButton>
         </div>
+
         <Divider />
         <List>
           <MainListItems />
@@ -181,23 +244,27 @@ export const Layout = ({ children }) => {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           {children}
-          {/* <Box pt={4} className={classes.footer}>
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              align="center"
-              style={{ fontWeight: "bold" }}
-            >
-              Copyright &copy;
-              <Link color="inherit" href="https://russelsmithgroup.com/">
-                RusselSmith
-              </Link>{" "}
-              {new Date().getFullYear()}
-              {"."}
-            </Typography>
-          </Box> */}
         </Container>
+        <Box pt={4} className={classes.footer}>
+          <Typography
+            // variant="body2"
+            color="textSecondary"
+            align="center"
+            className={classes.footerText}
+          >
+            Copyright &copy;{" "}
+            <Link
+              style={{ color: "grey" }}
+              href="https://russelsmithgroup.com/"
+            >
+              RusselSmith Nigeria,
+            </Link>{" "}
+            {new Date().getFullYear()}
+            {"."}
+          </Typography>
+        </Box>
       </main>
+      {renderMenu}
     </div>
   );
 };
