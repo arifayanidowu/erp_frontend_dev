@@ -14,11 +14,12 @@ import Badge from "@material-ui/core/Badge";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import Link from "@material-ui/core/Link";
+// import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { MainListItems, SecondaryListItems } from "./ListItems";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -141,12 +142,14 @@ export const Layout = ({ children }) => {
           </IconButton>
 
           <div className={classes.title}>
-            <img
-              src="/img/rslogo.png"
-              alt="Logo"
-              width="100"
-              // className={classes.title}
-            />
+            <Link to="#">
+              <img
+                src="/img/rslogo.png"
+                alt="Logo"
+                width="80"
+                // className={classes.title}
+              />
+            </Link>
           </div>
 
           <IconButton>

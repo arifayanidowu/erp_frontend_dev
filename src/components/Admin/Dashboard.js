@@ -39,11 +39,11 @@ export const Dashboard = () => {
   const [date, setDate] = React.useState(null);
 
   React.useEffect(() => {
-    const day = new Date().getDay();
+    const day = new Date().getDate();
     const month = new Date().getMonth();
     const year = new Date().getFullYear();
 
-    const currentDate = `${day} / ${month} / ${year}`;
+    const currentDate = `${day} / ${month + 1} / ${year}`;
     setDate(currentDate);
   }, []);
 
